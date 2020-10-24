@@ -5,7 +5,7 @@ Flask-Cors==3.0.9
 gunicorn==20.0.4
 itsdangerous==1.1.0
 Jinja2==2.11.2
-MarkupSafe @ file:///tmp/build/80754af9/markupsafe_1594371495811/work
+MarkupSafe==1.1.1
 PyAudio==0.2.11
 six==1.15.0
 SpeechRecognition==3.8.1
