@@ -1,4 +1,4 @@
-python==3.4.7
+python==3.7.4
 pip==20.2.4
 certifi==2020.6.20
 click==7.1.2
