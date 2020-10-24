@@ -8,3 +8,7 @@ create an environment on anaconda with python 3.7.4
 
 To run the application, clone it on the local machine and run
   gunicorn --bind 0.0.0.0:5000 connector:app
+
+To see all the installed pip libraries, run
+  pip freeze requirements.txt
+
