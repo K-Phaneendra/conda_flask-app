@@ -13,7 +13,7 @@ from functions import (voice_to_text)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World! - this is flask'
+    return 'Hello, World! - this is flask server'
 
 @app.route('/upload-file', methods=['POST'])
 def uploadFile():
@@ -32,3 +32,6 @@ def audioToText():
     if voiceToTextResponse['status'] == 'success':
         return download_file(voiceToTextResponse['filePathToDownload'])
 
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
