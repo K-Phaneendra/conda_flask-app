@@ -11,3 +11,4 @@ six==1.15.0
 SpeechRecognition==3.8.1
 Werkzeug==1.0.1
 portaudio==19.6.0
+openssl==1.1.1h
