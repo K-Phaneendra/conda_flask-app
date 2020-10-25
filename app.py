@@ -13,7 +13,7 @@ from audioToText import (voice_to_text)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World! - this is flask server'
+    return 'Hello visitor! - this is flask server'
 
 @app.route('/upload-file', methods=['POST'])
 def uploadFile():
@@ -22,7 +22,9 @@ def uploadFile():
         if uploadFileResponse['status'] == 'success':
             uploadedFilename = uploadFileResponse['fileInfo']['name']
             return { 'status': 'success', 'message': 'File uploaded successfully, conversion to text has begun', 'filename': uploadedFilename }
-    except:
+    except Exception,e:
+        print str(e)
+        print('error---on---uploadfile', e)
         return { 'status': 'failed', 'message': 'Failed to uploaded the file, please try again later', 'filename': '' }
 
 @app.route('/audio-to-text', methods=['POST'])
