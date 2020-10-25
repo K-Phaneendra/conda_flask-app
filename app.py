@@ -37,5 +37,3 @@ def audioToText():
     if voiceToTextResponse['status'] == 'failed':
         return { 'status': 'failed', 'message': 'Failed to convert audio file to text. Please try again.' }
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
