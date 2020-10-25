@@ -12,15 +12,21 @@
   1. gunicorn --bind 0.0.0.0:5000 connector:app
 
 3. To see all the installed pip libraries, run
-  1. pip freeze requirements.txt
+  1. pip freeze > requirements.txt
 
 # Deployment:
 
-1. create a buildpack on heroku app
+Note: all the below process should run in conda environment
+
+1. Run pip freeze > requirements.txt to see if there are any changes on requirements.txt
+
+2. If needed, create a buildpack on heroku app
   heroku buildpack:add heroku/python
   heroku buildpack:add https://github.com/heroku/heroku-buildpack-apt.git
 
-2. If used any packages which are not installed with pip, then add those in "Aptfile"
+3. If used any packages which are not installed with pip, then add those in "Aptfile"
+
+4. git push heroku master
 
 # Hosted:
   Hosted on heroku
