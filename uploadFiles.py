@@ -26,6 +26,5 @@ def upload_file(request):
         return { 'status': 'success', 'message': 'File uploaded successfully.', 'fileInfo': { 'name': filename } }
 
 def download_file(filepath):
-    print('ddddddd', filepath)
     path = filepath
     return send_file(path, as_attachment=True)

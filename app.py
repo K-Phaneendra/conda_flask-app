@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 from flask_cors import CORS
 
 # importing from uploadFiles.py
@@ -9,7 +9,7 @@ CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # importing voice_to_text function from file functions.py
-from functions import (voice_to_text)
+from audioToText import (voice_to_text)
 
 @app.route('/')
 def hello_world():
@@ -17,10 +17,13 @@ def hello_world():
 
 @app.route('/upload-file', methods=['POST'])
 def uploadFile():
-    uploadFileResponse = upload_file(request)
-    if uploadFileResponse['status'] == 'success':
-        uploadedFilename = uploadFileResponse['fileInfo']['name']
-        return { 'status': 'success', 'message': 'File uploaded successfully, conversion to text has begun', 'filename': uploadedFilename }
+    try:
+        uploadFileResponse = upload_file(request)
+        if uploadFileResponse['status'] == 'success':
+            uploadedFilename = uploadFileResponse['fileInfo']['name']
+            return { 'status': 'success', 'message': 'File uploaded successfully, conversion to text has begun', 'filename': uploadedFilename }
+    except:
+        return { 'status': 'failed', 'message': 'Failed to uploaded the file, please try again later', 'filename': '' }
 
 @app.route('/audio-to-text', methods=['POST'])
 def audioToText():
@@ -30,8 +33,9 @@ def audioToText():
     print('uploadedFilename', uploadedFilename)
     voiceToTextResponse = voice_to_text(uploadedFilename)
     if voiceToTextResponse['status'] == 'success':
-        return download_file(voiceToTextResponse['filePathToDownload'])
-
+        return send_file(voiceToTextResponse['filePathToDownload'], as_attachment=True)
+    if voiceToTextResponse['status'] == 'failed':
+        return { 'status': 'failed', 'message': 'Failed to convert audio file to text. Please try again.' }
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

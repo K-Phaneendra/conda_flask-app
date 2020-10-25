@@ -44,7 +44,7 @@ def voice_to_text(filename):
         rec = r.recognize_google(audio)
         fh.write(rec+". ")
 #        return("Google Speech Recognition thinks you said " + rec)
-        return {'status': 'success', 'filePathToDownload': './recognized.txt'}
+        return {'status': 'success', 'filePathToDownload': './recognized.txt', 'text': rec}
     except sr.UnknownValueError:
         return("Google Speech Recognition could not understand audio")
     except sr.RequestError as e:
