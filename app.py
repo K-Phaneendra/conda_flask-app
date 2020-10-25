@@ -22,8 +22,7 @@ def uploadFile():
         if uploadFileResponse['status'] == 'success':
             uploadedFilename = uploadFileResponse['fileInfo']['name']
             return { 'status': 'success', 'message': 'File uploaded successfully, conversion to text has begun', 'filename': uploadedFilename }
-    except Exception,e:
-        print str(e)
+    except Exception as e:
         print('error---on---uploadfile', e)
         return { 'status': 'failed', 'message': 'Failed to uploaded the file, please try again later', 'filename': '' }
 
