@@ -10,7 +10,7 @@ from os import path
 from uploadFiles import (upload_file, UPLOAD_FOLDER)
 
 
-def voice_to_text(filename):
+def audio_to_text(filename):
 
     AUDIO_FILE = path.join(UPLOAD_FOLDER, filename)
     # open the audio file stored in 

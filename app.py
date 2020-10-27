@@ -8,8 +8,8 @@ app = Flask(__name__)
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# importing voice_to_text function from file functions.py
-from audioToText import (voice_to_text)
+# importing audio_to_text function from file functions.py
+from audioToText import (audio_to_text)
 
 @app.route('/')
 def hello_world():
@@ -28,11 +28,8 @@ def uploadFile():
 
 @app.route('/audio-to-text', methods=['POST'])
 def audioToText():
-#    text = voice_to_text()
-#    return text
     uploadedFilename = request.json['filename']
-    print('uploadedFilename', uploadedFilename)
-    voiceToTextResponse = voice_to_text(uploadedFilename)
+    voiceToTextResponse = audio_to_text(uploadedFilename)
     if voiceToTextResponse['status'] == 'success':
         return send_file(voiceToTextResponse['filePathToDownload'], as_attachment=True)
     if voiceToTextResponse['status'] == 'failed':
