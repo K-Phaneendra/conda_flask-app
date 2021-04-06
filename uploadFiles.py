@@ -2,7 +2,6 @@ import os
 from flask import flash, send_file
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = './UPLOADED_FILES'
 ALLOWED_EXTENSIONS = {
     'txt',
     'wav',
@@ -12,7 +11,7 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(request):
+def upload_file(request, UPLOAD_FOLDER):
     # check if post request has the file part
     if 'file' not in request.files:
         flash('No file part')

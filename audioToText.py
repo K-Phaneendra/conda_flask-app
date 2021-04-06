@@ -7,10 +7,10 @@ import os
 from os import path
 
 # importing from uploadFiles.py
-from uploadFiles import (upload_file, UPLOAD_FOLDER)
+from uploadFiles import (upload_file)
 
 
-def audio_to_text(filename):
+def audio_to_text(filename, UPLOAD_FOLDER):
 
     AUDIO_FILE = path.join(UPLOAD_FOLDER, filename)
     # open the audio file stored in 
