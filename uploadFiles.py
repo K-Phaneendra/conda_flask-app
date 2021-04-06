@@ -5,11 +5,17 @@ from werkzeug.utils import secure_filename
 ALLOWED_EXTENSIONS = {
     'txt',
     'wav',
+    'jpg'
 }
 
+# Check if the file name is as per allowed extensions
 def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    try:
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    except Exception as e:
+        print('filename is not as per allowed extinsions'. e)
+        return False
 
 def upload_file(request, UPLOAD_FOLDER):
     # check if post request has the file part
