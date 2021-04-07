@@ -22,7 +22,9 @@ Note: all the below process should run in conda environment
 
 2. If needed, create a buildpack on heroku app
   heroku buildpacks:add heroku/python
+  <!-- used to read the "Aptfile" of our project -->
   heroku buildpacks:add https://github.com/heroku/heroku-buildpack-apt.git
+  heroku buildpacks:add --index 1 heroku-community/apt
 
 3. If used any packages which are not installed with pip, then add those in "Aptfile"
 
