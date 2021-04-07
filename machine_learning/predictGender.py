@@ -94,7 +94,6 @@ def predict_gender_from_image(imgPath, color, filename):
       flattenedImage_mean = flattenedImage - meanOfAllImages
       # flattenedImage_mean = flattenedImage - meanOfAllImages
 
-      print(flattenedImage_mean.shape, 'flattenedImage_mean-------')
       # step - 8: Get Eigen image
       eigen_image = MODEL_PCA.transform(flattenedImage_mean)
 
