@@ -1,7 +1,2 @@
 portaudio19-dev
 python-all-dev
-python3-setuptools
-python3-numpy
-python3-scipy
-libatlas-dev
-libatlas3gf-base
