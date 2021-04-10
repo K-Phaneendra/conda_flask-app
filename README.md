@@ -30,6 +30,8 @@ Note: all the below process should run in conda environment
 
 4. git push heroku master
 
+5. to check logs use "heroku logs --tail"
+
 # Hosted:
   Hosted on heroku
   URL: https://warm-beyond-68761.herokuapp.com/
