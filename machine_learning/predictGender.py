@@ -80,6 +80,7 @@ def predict_gender_from_image(imgPath, color, filename):
       croppedImg = croppedImg / 255.0
       # Resize images (100, 100)
       width = croppedImg.shape[0] # by using [0], we get width of the image
+      height = croppedImg.shape[1]
 
       croppedImg_resized = None # initalize variable
 
@@ -108,14 +109,24 @@ def predict_gender_from_image(imgPath, color, filename):
 
       # step - 11: write text on the image and save it
       text = "%s : %0.2f"%(gender_pre[predict], score*100)
-      cv2.putText(img, text+'%', (dimensions['x'], dimensions['y']-5), font, 1, (0, 255, 0), 2)
+      # generate the font scale
+      fontScale = None
+      fontScaleValue = (croppedImg.shape[0] * croppedImg.shape[1]) / 100000
+      if fontScaleValue > 0 and fontScaleValue < 1:
+        fontScale = 1
+      else:
+        fontScale = fontScaleValue
+
+      cv2.putText(img, text+'%', (dimensions['x'], dimensions['y']-5), font, fontScale, (0, 255, 0), 4)
       # save predicted image
       cv2.imwrite(PATHS['predictedImages']+'/{}'.format(filename), img)
       
     return {
-        'status': 'success', 'message': 'Gender prediction completed', 'predictedImage': PATHS['predictedImages']+'/'+filename,
-        'predictedFolderPath': PATHS['predictedImages']
-      }
+      'status': 'success',
+      'message': 'Gender prediction completed',
+      'predictedImage': PATHS['predictedImages']+'/'+filename,
+      'predictedFolderPath': PATHS['predictedImages']
+    }
   except Exception as e:
     print('error--on--predicting gender from image', e)
     return { 'status': 'failed', 'message': 'Failed to predict gender from image.' }

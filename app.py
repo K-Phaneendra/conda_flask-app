@@ -5,7 +5,7 @@ from flask_cors import CORS
 from uploadFiles import (upload_file, download_file)
 from audioToText import (audio_to_text)
 # importing functions
-from functions import (deleteUploadedFileByName, convertImageToBase64)
+from functions import (deleteUploadedFileByName, compressImage, convertImageToBase64)
 from machine_learning.predictGender import (predict_gender_from_image)
 
 app = Flask(__name__)
@@ -27,7 +27,16 @@ def uploadFile():
         uploadFileResponse = upload_file(request, UPLOAD_FOLDER)
         if uploadFileResponse['status'] == 'success':
             uploadedFilename = uploadFileResponse['fileInfo']['name']
-            return { 'status': 'success', 'message': 'File uploaded successfully', 'filename': uploadedFilename }
+            return {
+                'status': 'success',
+                'message': 'File uploaded successfully',
+                'filename': uploadedFilename
+            }
+        else:
+            return {
+                'status': 'failed',
+                'message': uploadFileResponse['message']
+            }
     except Exception as e:
         print('error---on---uploadfile', e)
         return { 'status': 'failed', 'message': 'Failed to uploaded the file, please try again later', 'filename': '' }
@@ -58,6 +67,7 @@ def predictGender():
         if res['status'] == 'success':
             # delete the uploaded image once prediction was done from it
             deleteUploadedFileByName(uploadedFilename, UPLOAD_FOLDER)
+            compressedImage = compressImage(res['predictedImage'])
             conversionResponse = convertImageToBase64(res['predictedImage'])
             if conversionResponse['status'] == 'success':
                 # delete the predicted image
@@ -65,7 +75,7 @@ def predictGender():
                 return {
                     'status': 'success',
                     'message': 'Predicted gender successfully',
-                    'image': conversionResponse['base64'],
+                    'image': conversionResponse['base64']
                 }
             else:
                 return {
@@ -74,5 +84,5 @@ def predictGender():
                     'image': None
                 }
     except Exception as e:
-        print('error--on--predicting gender from an image', e)
+        print('error--on--predicting gender API', e)
         return { 'status': 'failed', 'message': 'Failed to predict gender. Please try again.' }
