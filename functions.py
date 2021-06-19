@@ -4,7 +4,7 @@ from PIL import Image
 
 def deleteUploadedFileByName(fileName, UPLOAD_FOLDER):
     try:
-        filePath = UPLOAD_FOLDER + "/" + fileName
+        filePath = os.path.join(UPLOAD_FOLDER, fileName)
         # check if file exists
         if os.path.exists(UPLOAD_FOLDER):
             os.remove(filePath)
@@ -14,6 +14,22 @@ def deleteUploadedFileByName(fileName, UPLOAD_FOLDER):
     except Exception as e:
         print('error--on--deleting a file', e)
         return { 'status': 'failed', 'message': 'Failed to delete a file.' }
+
+def emptyFolder(folderPath):
+    try:
+        totalFiles = os.listdir(folderPath)
+        deletedFilesCount = 0
+        for filename in os.listdir(folderPath):
+            # apart from ReadMe.txt, delete rest of the files
+            if filename != 'ReadMe.txt':
+                deletedFilesCount += 1
+                deleteUploadedFileByName(filename, folderPath)
+        if deletedFilesCount == len(totalFiles) - 1:
+            # all files are successfully deleted
+            return { 'status': 'success', 'message': 'Files deleted successfully' }
+    except Exception as e:
+        return { 'status': 'failed', 'message': 'Failed to delete a file.' }
+    
 
 def compressImage(imagePath):
     try:
