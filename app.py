@@ -6,7 +6,7 @@ from flask_cors import CORS
 from uploadFiles import (upload_file, download_file)
 from audioToText import (audio_to_text)
 # importing functions
-from functions import (deleteUploadedFileByName, emptyFolder, compressImage, convertImageToBase64)
+from functions import (deleteUploadedFileByName, emptyFolder, compressImage, convertImageToBase64, sendEmailWithFormDetails)
 from machine_learning.predictGender import (predict_gender_from_image)
 from machine_learning.imageToSketch import (applyFilterOnImageByConversionType)
 
@@ -155,4 +155,27 @@ def deleteFilesInUploadFolder():
         return {
             'status': 'failed',
             'message': 'Failed to empty the folder. Please try again'
+        }
+
+# API TO SEND A CONTACT EMAIL
+@app.route('/send-contact-email', methods=['POST'])
+def sendEmail():
+    try:
+        # check if post request has the file part
+        formDetails = request.json['formDetails']
+        emailResponse = sendEmailWithFormDetails(formDetails)
+        if emailResponse['status'] == 'success':
+            return {
+                    'status': 'success',
+                    'message': emailResponse['message']
+                }
+        else:
+            return {
+                'status': 'failed',
+                'message': emailResponse['message']
+            }
+    except Exception as e:
+        return {
+            'status': 'failed',
+            'message': str(e)
         }
