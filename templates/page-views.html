@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pageTitle }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .counter-container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .counter-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="counter-container">
+        <h1>Page View Counter</h1>
+        <p>Total: <span id="count" class="counter-value">{{ pageViewCount }}</span></p>
+    </div>
+
+</body>
+</html>

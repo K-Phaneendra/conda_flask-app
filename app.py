@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 from flask_cors import CORS
 
 # importing from uploadFiles.py
@@ -174,6 +174,33 @@ def sendEmail():
                 'status': 'failed',
                 'message': emailResponse['message']
             }
+    except Exception as e:
+        return {
+            'status': 'failed',
+            'message': str(e)
+        }
+
+# API TO READ IF THE PAGE IS VIEWED
+@app.route("/page-views", methods=["GET"])
+def pageViews():
+    try:
+        # write the page view count to the db file named "page-views.txt" 
+        # READ FILE
+        file = open("db/page-views.txt", 'r')
+        prevCount = file.read()
+        previous_count = int(prevCount)
+        current_count = previous_count + int(1)
+        currentCount = str(current_count)
+        file.close()
+        # WRITE IN FILE
+        file2 = open("db/page-views.txt", 'w')
+        # erase file contents
+        file2.truncate(0)
+        file2.write(currentCount)
+        file2.close()
+
+        # render_template will search for templates folder
+        return render_template('page-views.html', pageTitle="Page Views Count", pageViewCount=currentCount)
     except Exception as e:
         return {
             'status': 'failed',
