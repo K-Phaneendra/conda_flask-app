@@ -36,6 +36,12 @@ Note: all the below process should run in conda environment
 
 5. to check logs use "heroku logs --tail"
 
+# Clear cache
+When an issue with slug size occurs, purging cache could help. Doc: https://devcenter.heroku.com/articles/slug-compiler#slug-size
+
+`heroku plugins:install heroku-builds`
+`heroku builds:cache:purge`
+
 # Hosted:
   Hosted on heroku
   URL: https://warm-beyond-68761.herokuapp.com/
